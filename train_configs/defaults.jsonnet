@@ -93,7 +93,7 @@ local dataset_path = "/content/drive/My Drive/spider/";
   },
   "trainer": {
     "num_epochs": 30,
-    "cuda_device": 0,
+    "cuda_device": -1,
     "patience": 20,
     "validation_metric": "+sql_match",
     "optimizer": {
