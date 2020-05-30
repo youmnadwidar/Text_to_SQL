@@ -1,5 +1,5 @@
 
-local dataset_path = "/content/drive/My Drive/spider/";
+local dataset_path = "spider/";
 
 {
   "random_seed": 5,
@@ -92,13 +92,13 @@ local dataset_path = "/content/drive/My Drive/spider/";
     "batch_size" : 15
   },
   "trainer": {
-    "num_epochs": 30,
-    "cuda_device": -1,
+    "num_epochs": 50,
+    "cuda_device": 0,
     "patience": 20,
     "validation_metric": "+sql_match",
     "optimizer": {
       "type": "adam",
-      "lr": 0.001
+      "lr": 0.005
     },
     "num_serialized_models_to_keep": 2
   }
