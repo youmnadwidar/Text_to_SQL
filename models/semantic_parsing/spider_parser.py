@@ -120,10 +120,10 @@ class SpiderParser(Model):
         self._num_entity_types = 9
         self._embedding_dim = question_embedder.get_output_dim()
 
-        # self._entity_type_encoder_embedding = Embedding(self._num_entity_types, self._embedding_dim)
-        # self._entity_type_decoder_embedding = Embedding(self._num_entity_types, action_embedding_dim)
-        self._entity_type_encoder_embedding = PretrainedBertEmbedder(pretrained_model="bert-base-uncased",top_layer_only= True)
-        self._entity_type_decoder_embedding = PretrainedBertEmbedder(pretrained_model="bert-base-uncased",top_layer_only= True)
+        self._entity_type_encoder_embedding = Embedding(self._num_entity_types, self._embedding_dim)
+        self._entity_type_decoder_embedding = Embedding(self._num_entity_types, action_embedding_dim)
+        # self._entity_type_encoder_embedding = PretrainedBertEmbedder(pretrained_model="bert-base-uncased",top_layer_only= True)
+        # self._entity_type_decoder_embedding = PretrainedBertEmbedder(pretrained_model="bert-base-uncased",top_layer_only= True)
 
         self._linking_params = torch.nn.Linear(16, 1)
         torch.nn.init.uniform_(self._linking_params.weight, 0, 1)
