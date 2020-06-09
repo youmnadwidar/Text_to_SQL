@@ -1,5 +1,7 @@
+local bert_model = "bert-base-uncased";
 
-local dataset_path = "spider/";
+local dataset_path = "/content/drive/My Drive/spider/";
+
 
 {
   "random_seed": 5,
@@ -61,6 +63,19 @@ local dataset_path = "spider/";
         }
     
     },
+    "schema_embedder":{
+      "allow_unmatched_keys": true,
+        "embedder_to_indexer_map": {
+            "bert": ["tokens"],
+        },
+        "token_embedders": {
+            "bert": {
+                "type": "bert-pretrained",
+                "pretrained_model": "bert-base-uncased"
+            }
+        }
+    
+    },
     "action_embedding_dim": 768,
     "encoder": {
       "type": "lstm",
@@ -85,11 +100,11 @@ local dataset_path = "spider/";
   },
   "iterator": {
     "type": "basic",
-    "batch_size" : 15
+    "batch_size" : 8
   },
   "validation_iterator": {
     "type": "basic",
-    "batch_size" : 15
+    "batch_size" : 8
   },
   "trainer": {
     "num_epochs": 50,
@@ -97,8 +112,8 @@ local dataset_path = "spider/";
     "patience": 20,
     "validation_metric": "+sql_match",
     "optimizer": {
-      "type": "adam",
-      "lr": 0.005
+      "type": "sgd",
+      "lr": 0.001
     },
     "num_serialized_models_to_keep": 2
   }
