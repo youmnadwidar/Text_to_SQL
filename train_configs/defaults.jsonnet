@@ -1,6 +1,6 @@
 local bert_model = "bert-base-uncased";
 
-local dataset_path = "/content/drive/My Drive/spider/";
+local dataset_path = "spider/";
 
 
 {
