@@ -15,9 +15,9 @@ from spacy.symbols import ORTH, LEMMA
 
 from dataset_readers.dataset_util.spider_utils import fix_number_value, disambiguate_items
 from dataset_readers.fields.knowledge_graph_field import SpiderKnowledgeGraphField
-from modules.Bert_Tokenizer import Bert_Tokenizer
 from semparse.contexts.spider_db_context import SpiderDBContext
 from semparse.worlds.spider_world import SpiderWorld
+from modules.Bert_Tokenizer import Bert_Tokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +35,7 @@ class SpiderDatasetReader(DatasetReader):
                  loading_limit = -1):
         super().__init__(lazy=lazy)
 
+        # default spacy tokenizer splits the common token 'id' to ['i', 'd'], we here write a manual fix for that
         token_indexer = PretrainedBertIndexer(pretrained_model="bert-base-uncased",  do_lowercase=True,use_starting_offsets=True)
         self._tokenizer = Bert_Tokenizer(token_indexer.wordpiece_tokenizer)
 
@@ -121,7 +122,6 @@ class SpiderDatasetReader(DatasetReader):
                          utterance: str,
                          db_id: str,
                          sql: List[str] = None):
-        
         fields: Dict[str, Field] = {}
 
         db_context = SpiderDBContext(db_id, utterance, tokenizer=self._tokenizer,
@@ -136,6 +136,7 @@ class SpiderDatasetReader(DatasetReader):
         world = SpiderWorld(db_context, query=sql)
         fields["utterance"] = TextField(db_context.tokenized_utterance, self._utterance_token_indexers)
         action_sequence, all_actions = world.get_action_sequence_and_all_actions()
+
         if action_sequence is None and self._keep_if_unparsable:
             # print("Parse error")
             action_sequence = []
